@@ -1,7 +1,8 @@
 FROM java:8-jre
 
-MAINTAINER Michael INTHILITH <minthilith@gmail.com> 
-LABEL version="1.0.0"
+MAINTAINER Andrew Jones <andrew@andrew-jones.com> 
+# version of Cloud SDK
+LABEL version="180.0.1"
 LABEL app="pubsub-emulator"
 
 ENV CLOUDSDK_CORE_DISABLE_PROMPTS 1
@@ -17,12 +18,9 @@ RUN \
 	curl https://sdk.cloud.google.com | bash && \
  	cat /root/google-cloud-sdk/path.bash.inc | bash && \
  	cat /root/google-cloud-sdk/completion.bash.inc | bash && \
- 	/root/google-cloud-sdk/bin/gcloud components install -q pubsub-emulator beta
+ 	/root/google-cloud-sdk/bin/gcloud components install -q pubsub-emulator beta && \
+ 	mkdir -p ${DATA_DIR}
 
-COPY start.sh /start.sh
-
-RUN chmod +x /start.sh
-
-CMD ["/start.sh"]
+CMD ["sh", "-c", "/root/google-cloud-sdk/bin/gcloud beta emulators pubsub start --data-dir ${DATA_DIR} --host-port 0.0.0.0:${HOST_PORT}"]
 
 EXPOSE 8042

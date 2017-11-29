@@ -1,16 +1,16 @@
+Forked from https://github.com/kinok/google-pubsub-emulator. This container will not try to update the Cloud SDK each time it starts, but instead the SDK version is commited at build time, with a new tag created with the version name. This makes it much quicker to start up.
+
 # Docker Container for Google PubSub emulator
 
 The gcloud suite has an emulator for Google PubSub, which is great for testing locally how to run code against their APIs.
 
 However, it is not very useful if you want to run in a containerized environment, and want to test how the whole thing behaves. Hence this container.
 
-The emulator will try to update automatically every time container start.
-
 # How to use
 
 ```
-$ docker pull kinok/google-pubsub-emulator:latest
-$ docker run -it --name pubsub-emulator -p 8042:8042 kinok/google-pubsub-emulator:latest
+$ docker pull andrewrjones/google-pubsub-emulator:latest
+$ docker run -it --name pubsub-emulator -p 8042:8042 andrewrjones/google-pubsub-emulator:latest
 ```
 
 Now you need to run the equivalent of the ```$(gcloud beta emulators pubsub env-init)``` command
@@ -27,7 +27,7 @@ Now you can use the standard APIs such as [gcloud-python](https://github.com/goo
 You can bind a volume to /data in the container to get resilient data.
 
 ```
-$ docker run -it --name pubsub-emulator -p 8042:8042 -v /path/to/my/data/folder:/data kinok/google-pubsub-emulator:latest
+$ docker run -it --name pubsub-emulator -p 8042:8042 -v /path/to/my/data/folder:/data andrewrjones/google-pubsub-emulator:latest
 ```
 
 ## Port
